@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">WanAndroid</string>
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_password">Password</string>
+
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login_in">login</string>
+    <string name="login_account_tint">please input user name</string>
+    <string name="login_password_tint">please input password</string>
+    <string name="or">or</string>
+    <string name="register">register</string>
+    <string name="username_or_password_incorrect_toast">用户名或密码不合法</string>
+</resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_group"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/login_account_edit"
+        style="@style/style_circle_edit"
+        android:layout_marginTop="@dimen/dp_72"
+        android:drawableLeft="@drawable/ic_account"
+        android:hint="@string/login_account_tint" />
+
+    <include layout="@layout/layout_divider" />
+
+    <EditText
+        android:id="@+id/login_password_edit"
+        style="@style/style_circle_edit"
+        android:layout_marginTop="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_password"
+        android:hint="@string/login_password_tint"
+        android:inputType="textPassword" />
+
+    <include layout="@layout/layout_divider" />
+
+    <Button
+        android:id="@+id/login_btn"
+        style="@style/WanButton.Theme"
+        android:layout_marginStart="@dimen/dp_64"
+        android:layout_marginTop="@dimen/dp_72"
+        android:layout_marginEnd="@dimen/dp_64"
+        android:onClick="onLogin"
+        android:text="@string/login_in" />
+
+    <TextView
+        android:id="@+id/login_or_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_12"
+        android:text="@string/or"
+        android:textColor="@color/gray_5b5d5c"
+        android:textSize="@dimen/sp_16" />
+
+    <Button
+        android:id="@+id/login_register_btn"
+        style="@style/WanButton.Theme"
+        android:layout_marginStart="@dimen/dp_64"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginEnd="@dimen/dp_64"
+        android:onClick="onRegister"
+        android:text="@string/register" />
+</LinearLayout>
