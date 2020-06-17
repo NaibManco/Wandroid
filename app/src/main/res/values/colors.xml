@@ -5,9 +5,14 @@
     <color name="colorAccent">#0099CC</color>
     <color name="ic_launcher_background">#0099CC</color>
 
-    <color name="black_22">#222222</color>
-    <color name="black_50_percent">#08000000</color>
-    <color name="black_80_percent">#CC000000</color>
+    <color name="black_222222">#222222</color>
+    <color name="black_5">#0C000000</color>
+    <color name="black_10">#1A000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="black_50">#7F000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_70">#B3000000</color>
+    <color name="black_80">#CD000000</color>
 
     <color name="gray_cccccc">#cccccc</color>
     <color name="gray_e5e5e5">#E5E5E5</color>
@@ -15,6 +20,4 @@
 
     <color name="backgroundPrimary">#FFEFF0F5</color>
     <color name="backgroundTertiary">#FFFFFFFF</color>
-    <color name="rippleColor">#33000000</color>
-
 </resources>

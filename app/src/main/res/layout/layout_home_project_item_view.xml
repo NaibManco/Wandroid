@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_recycler_item"
+    android:orientation="vertical"
     android:padding="@dimen/dp_16">
 
     <com.naib.wandroid.base.widget.SideLinearLayout
@@ -11,14 +12,14 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/home_article_item_title"
+            android:id="@+id/home_project_item_title"
             style="@style/WanText.Title"
             android:layout_width="match_parent"
-            android:maxLines="3"
+            android:maxLines="2"
             android:paddingRight="@dimen/dp_12" />
 
         <ImageView
-            android:id="@+id/home_article_item_favorite"
+            android:id="@+id/home_project_item_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_like" />
@@ -27,7 +28,26 @@
     <com.naib.wandroid.base.widget.SideLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp_16">
+        android:paddingTop="@dimen/dp_12">
+
+        <TextView
+            android:id="@+id/home_project_item_desc"
+            style="@style/WanText.Desc"
+            android:maxLines="4"
+            android:lineSpacingMultiplier="1.2"
+            android:paddingRight="@dimen/dp_12"/>
+
+        <com.naib.wandroid.base.widget.RatioImageView
+            android:id="@+id/home_project_item_pic"
+            android:layout_width="@dimen/dp_64"
+            android:layout_height="wrap_content"
+            app:ratio="0.55"/>
+    </com.naib.wandroid.base.widget.SideLinearLayout>
+
+    <com.naib.wandroid.base.widget.SideLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_12">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,18 +55,18 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/home_article_item_author"
-                style="@style/WanText.Content" />
+                android:id="@+id/home_project_item_author"
+                style="@style/WanText.Info" />
 
             <TextView
-                android:id="@+id/home_article_item_category"
-                style="@style/WanText.Content" />
+                android:id="@+id/home_project_item_category"
+                style="@style/WanText.Info" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/home_article_item_time"
-            style="@style/WanText.Content" />
+            android:id="@+id/home_project_item_time"
+            style="@style/WanText.Info" />
     </com.naib.wandroid.base.widget.SideLinearLayout>
 
 </LinearLayout>

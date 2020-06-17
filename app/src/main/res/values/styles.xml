@@ -11,6 +11,12 @@
         <item name="toolbarNavigationButtonStyle">@style/ToolbarNavigationButtonStyle</item>
     </style>
 
+    <style name="WanToolBarTitle">
+        <item name="android:textColor">@color/primary_dark_material_light</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="WanToolBar" parent="@android:style/Widget.Material.Toolbar">
         <item name="android:contentInsetLeft">0dp</item>
     </style>
@@ -36,7 +42,7 @@
     <style name="style_circle_edit">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/black_22</item>
+        <item name="android:textColor">@color/black_222222</item>
         <item name="android:textColorHint">@color/gray_cccccc</item>
         <item name="android:textSize">@dimen/sp_18</item>
         <item name="android:background">@null</item>
@@ -75,5 +81,32 @@
     <style name="WanButton.Common">
         <item name="android:elevation">@dimen/dp_2</item>
         <item name="android:background">@drawable/bg_common_button</item>
+    </style>
+
+    <style name="WanText">
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="WanText.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WanText.Title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textColor">@color/black_80</item>
+    </style>
+
+    <style name="WanText.Desc">
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/black_60</item>
+    </style>
+
+    <style name="WanText.Info">
+        <item name="android:textColor">@color/black_50</item>
     </style>
 </resources>

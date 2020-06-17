@@ -37,7 +37,11 @@ abstract class BaseActivity : AppCompatActivity() {
         onCreateToolbar(toolbar)
     }
 
-    open fun onCreateToolbar(toolbar: Toolbar) {}
+    open fun onCreateToolbar(toolbar: Toolbar) {
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -10,10 +10,11 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:titleTextColor="@color/primary_dark_material_light"
+        android:elevation="@dimen/dp_1"
+        android:layout_marginTop="-2dp"
         app:contentInsetStartWithNavigation="0dp"
         app:titleMarginStart="0dp"
+        app:titleTextAppearance="@style/WanToolBarTitle"
         app:navigationIcon="@drawable/ic_arrow_back_black_24dp">
 
         <TextView
@@ -23,6 +24,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:visibility="gone"
+            android:maxWidth="@dimen/dp_64"
             android:text="title" />
     </com.google.android.material.appbar.MaterialToolbar>
 

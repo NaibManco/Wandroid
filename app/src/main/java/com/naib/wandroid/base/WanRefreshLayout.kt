@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewConfiguration
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import kotlin.math.abs
 
 /**
  * Created by Naib on 2020/6/15
@@ -13,9 +14,8 @@ class WanRefreshLayout : SwipeRefreshLayout {
     private var startY = 0f
     private var startX = 0f
 
-    // 判断viewPager是否在正在拖拽
-    private var isviewPagerDragger = false
-    private var mTouchSlop = 0
+    private var isHorizontalDrag = false
+    private var touchSlop = 0
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -30,7 +30,7 @@ class WanRefreshLayout : SwipeRefreshLayout {
 
     private fun init(context: Context) {
         //滑动最小距离
-        mTouchSlop = ViewConfiguration.get(context).scaledTouchSlop
+        touchSlop = ViewConfiguration.get(context).scaledTouchSlop
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
@@ -40,23 +40,21 @@ class WanRefreshLayout : SwipeRefreshLayout {
                 startY = ev.rawY
                 startX = ev.rawX
                 // 初始化标记
-                isviewPagerDragger = false
+                isHorizontalDrag = false
             }
             MotionEvent.ACTION_MOVE -> {
-                // 如果正在拖拽，直接返回flase，让viewPager处理
-                if (isviewPagerDragger) {
+                if (isHorizontalDrag) {
                     return false
                 }
-                val gapX = Math.abs(ev.rawX - startX)
-                val gapY = Math.abs(ev.rawY - startY)
-                // 如果是滑动并且是横向滑动，返回flase让viewPager处理
-                if (gapX > mTouchSlop && gapX > gapY) {
-                    isviewPagerDragger = true
+                val gapX = abs(ev.rawX - startX)
+                val gapY = abs(ev.rawY - startY)
+                if (gapX > touchSlop && gapX > gapY) {
+                    isHorizontalDrag = true
                     return false
                 }
             }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL ->                 // 标记复位
-                isviewPagerDragger = false
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL ->
+                isHorizontalDrag = false
         }
         return super.onInterceptTouchEvent(ev)
     }

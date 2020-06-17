@@ -3,6 +3,7 @@ package com.naib.wandroid.base.utils
 import android.content.Context
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -34,4 +35,18 @@ fun show(context: Context?, stringId: Int) {
         return
     }
     Toast.makeText(context, stringId, Toast.LENGTH_SHORT).show()
+}
+
+fun Any?.ifNull(block: () -> Unit) {
+    if (this == null) block()
+}
+
+fun <E> Collection<E>?.notEmpty(block: () -> Unit) {
+    if (this != null && !this.isEmpty()) block()
+}
+
+operator fun <T> MutableLiveData<MutableList<T>>.plusAssign(values: List<T>) {
+    val value = this.value ?: arrayListOf()
+    value.addAll(values)
+    this.value = value
 }

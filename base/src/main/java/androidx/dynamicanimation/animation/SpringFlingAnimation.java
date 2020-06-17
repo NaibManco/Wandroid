@@ -1,13 +1,9 @@
-package com.naib.wandroid.base.widget;
+package androidx.dynamicanimation.animation;
 
 import android.annotation.SuppressLint;
 
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
-import androidx.dynamicanimation.animation.DynamicAnimation;
-import androidx.dynamicanimation.animation.FloatPropertyCompat;
-import androidx.dynamicanimation.animation.FloatValueHolder;
-import androidx.dynamicanimation.animation.SpringForce;
 
 /**
  * ┏┛ ┻━━━━━┛ ┻┓

@@ -1,4 +1,4 @@
-package com.naib.wandroid.main.dashboard
+package com.naib.wandroid.main.project
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.naib.wandroid.R
 
-class DashboardFragment : Fragment() {
+class ProjectFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var projectViewModel: ProjectViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-            ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        projectViewModel =
+            ViewModelProviders.of(this).get(ProjectViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
         val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        projectViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

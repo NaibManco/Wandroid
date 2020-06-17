@@ -22,17 +22,28 @@ class SideLinearLayout @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         if (childCount != 2) {
+            setMeasuredDimension(widthMeasureSpec, heightMeasureSpec)
             return
         }
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
         if (widthMode == MeasureSpec.EXACTLY) {
-            measureChildren(widthMeasureSpec, heightMeasureSpec)
-            val child = getChildAt(0)
-            val params = param(child)
+            var lastChild = getChildAt(1)
+            measureChild(lastChild, widthMeasureSpec, heightMeasureSpec)
+            val firstChild = getChildAt(0)
+            measureChild(
+                firstChild,
+                MeasureSpec.makeMeasureSpec(
+                    widthSize - lastChild.measuredWidth,
+                    MeasureSpec.EXACTLY
+                ),
+                heightMeasureSpec
+            )
+            val height =
+                if (firstChild.measuredHeight > lastChild.measuredHeight) firstChild.measuredHeight else lastChild.measuredHeight
             setMeasuredDimension(
                 MeasureSpec.getSize(widthMeasureSpec),
-                paddingTop + child.measuredHeight +
-                        params.topMargin + params.bottomMargin + paddingBottom
+                paddingTop + height + paddingBottom
             )
         }
     }

@@ -1,6 +1,6 @@
 package com.naib.wandroid.main.home.data
 
-import android.app.Activity
+import android.net.Uri
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.naib.wandroid.R
 import com.naib.wandroid.base.WebViewActivity
 
@@ -39,7 +40,7 @@ class ProjectAdapter() : RecyclerView.Adapter<ProjectAdapter.BlogViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BlogViewHolder {
         return BlogViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.layout_home_article_item_view, parent, false)
+                .inflate(R.layout.layout_home_project_item_view, parent, false)
         )
     }
 
@@ -66,13 +67,21 @@ class ProjectAdapter() : RecyclerView.Adapter<ProjectAdapter.BlogViewHolder>() {
                 article.title!!
             )
         }
+        holder.descView.text = article.desc
+        holder.picView.let {
+            Glide.with(it)
+                .load(Uri.parse(article.envelopePic))
+                .into(it)
+        }
     }
 
     class BlogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var titleView: TextView = itemView.findViewById(R.id.home_article_item_title)
-        var authorView: TextView = itemView.findViewById(R.id.home_article_item_author)
-        var categoryView: TextView = itemView.findViewById(R.id.home_article_item_category)
-        var timeView: TextView = itemView.findViewById(R.id.home_article_item_time)
-        var favoriteView: ImageView = itemView.findViewById(R.id.home_article_item_favorite)
+        var titleView: TextView = itemView.findViewById(R.id.home_project_item_title)
+        var authorView: TextView = itemView.findViewById(R.id.home_project_item_author)
+        var categoryView: TextView = itemView.findViewById(R.id.home_project_item_category)
+        var descView: TextView = itemView.findViewById(R.id.home_project_item_desc)
+        var picView: ImageView = itemView.findViewById(R.id.home_project_item_pic)
+        var timeView: TextView = itemView.findViewById(R.id.home_project_item_time)
+        var favoriteView: ImageView = itemView.findViewById(R.id.home_project_item_favorite)
     }
 }
