@@ -1,4 +1,4 @@
-package com.naib.wandroid.main.notifications
+package com.naib.wandroid.main.architecture
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
