@@ -28,9 +28,11 @@ class UserInfoManager {
             return cacheUserInfo
         }
 
-        @Synchronized fun cacheUserInfo(userInfo: UserInfo) {
-            cacheUserInfo = userInfo
-            KV.put(USER_INFO, Gson().toJson(userInfo))
+        @Synchronized fun cacheUserInfo(userInfo: UserInfo?) {
+            userInfo?.apply {
+                cacheUserInfo = userInfo
+                KV.put(USER_INFO, Gson().toJson(userInfo))
+            }
         }
     }
 }

@@ -3,19 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="?android:attr/windowBackground">
+    android:background="?android:attr/windowBackground"
+    android:orientation="vertical">
+
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:elevation="@dimen/dp_1"
         android:layout_marginTop="-2dp"
+        android:elevation="@dimen/dp_1"
+        android:background="?android:attr/windowBackground"
         app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
         app:titleMarginStart="0dp"
-        app:titleTextAppearance="@style/WanToolBarTitle"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24dp">
+        app:titleTextAppearance="@style/WanToolBarTitle">
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -23,9 +25,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:visibility="gone"
             android:maxWidth="@dimen/dp_64"
-            android:text="title" />
+            android:text="title"
+            android:visibility="gone" />
     </com.google.android.material.appbar.MaterialToolbar>
 
     <FrameLayout

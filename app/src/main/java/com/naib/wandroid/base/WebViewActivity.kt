@@ -1,15 +1,26 @@
 package com.naib.wandroid.base
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.net.Uri
+import android.os.Build
 import android.text.TextUtils
+import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.widget.FrameLayout
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebChromeClient
+import com.just.agentweb.WebViewClient
 import com.naib.wandroid.R
 import com.naib.wandroid.WanApplication
+import com.naib.wandroid.base.utils.LogUtil
+import com.naib.wandroid.search.SearchActivity
 
 /**
  * Created by Naib on 2020/6/15
@@ -19,6 +30,18 @@ open class WebViewActivity : BaseActivity() {
     companion object {
         private const val KEY_URL: String = "url"
         private const val KEY_TITLE: String = "title"
+        private const val KEY_ID: String = "title"
+        private const val KEY_LIKE: String = "title"
+
+        fun launch(url: String, title: String, id: Int, like: Boolean) {
+            val context = WanApplication.instance!!.topActivity
+            var intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra(KEY_URL, url)
+            intent.putExtra(KEY_TITLE, title)
+            intent.putExtra(KEY_ID, id)
+            intent.putExtra(KEY_LIKE, like)
+            context.startActivity(intent)
+        }
 
         fun launch(url: String, title: String) {
             val context = WanApplication.instance!!.topActivity
@@ -39,6 +62,16 @@ open class WebViewActivity : BaseActivity() {
      */
     private var url: String? = null
 
+    /**
+     * 是否收藏
+     */
+    private var like: Boolean = false
+
+    /**
+     * 文章id
+     */
+    private var id: Int = 0;
+
     override fun onCreateContentView(container: ViewGroup) {
         getIntentData()
         if (TextUtils.isEmpty(url)) {
@@ -47,16 +80,10 @@ open class WebViewActivity : BaseActivity() {
         AgentWeb.with(this).setAgentWebParent(container, FrameLayout.LayoutParams(-1, -1))
             .useDefaultIndicator(getColor(R.color.colorAccent))
             .setWebChromeClient(receivedTitleCallback)
+            .setWebViewClient(webViewClientCallback)
             .createAgentWeb()
             .ready()
             .go(url)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == android.R.id.home) {
-            finish()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     /**
@@ -65,6 +92,8 @@ open class WebViewActivity : BaseActivity() {
     open fun getIntentData() {
         title = intent.getStringExtra(KEY_TITLE)
         url = intent.getStringExtra(KEY_URL)
+        id = intent.getIntExtra(KEY_ID, -1)
+        like = intent.getBooleanExtra(KEY_LIKE, false)
     }
 
     /**
@@ -78,5 +107,68 @@ open class WebViewActivity : BaseActivity() {
             super.onReceivedTitle(view, title)
             toolbar.title = title
         }
+    }
+
+    private val webViewClientCallback = WebViewClientCallback()
+
+    inner class WebViewClientCallback : WebViewClient() {
+
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            if (handleUrlLoading(request?.url)) {
+                return true
+            }
+            return super.shouldOverrideUrlLoading(view, request)
+        }
+
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            if (handleUrlLoading(Uri.parse(url))) {
+                return true
+            }
+            return super.shouldOverrideUrlLoading(view, url)
+        }
+    }
+
+    fun handleUrlLoading(uri: Uri?): Boolean {
+        val intent = Intent()
+        intent.data = uri
+        if (!uri?.scheme?.startsWith("http")!!) {
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            }
+            return true
+        }
+        return false
+    }
+
+    private val menuOpenInBrowser = 1
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            menuOpenInBrowser -> {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(url)
+                startActivity(intent)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val result = super.onCreateOptionsMenu(menu)
+        menu?.apply {
+            getItem(MENU_SEARCH).isVisible = false
+            getItem(MENU_LIKE).isVisible = true
+            if (like) {
+                val drawable = getDrawable(R.drawable.ic_like)
+                drawable?.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
+                getItem(MENU_LIKE).icon = drawable
+            }
+            add(Menu.NONE, menuOpenInBrowser, Menu.NONE, R.string.menu_open_in_browser)
+        }
+        return result
     }
 }

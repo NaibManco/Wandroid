@@ -3,6 +3,8 @@
     android:id="@+id/login_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/dp_64"
+    android:paddingRight="@dimen/dp_64"
     android:orientation="vertical">
 
     <EditText
@@ -24,12 +26,18 @@
 
     <include layout="@layout/layout_divider" />
 
+    <TextView
+        android:id="@+id/login_error"
+        style="@style/WanText.Info"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"/>
+
     <Button
         android:id="@+id/login_btn"
         style="@style/WanButton.Theme"
-        android:layout_marginStart="@dimen/dp_64"
         android:layout_marginTop="@dimen/dp_72"
-        android:layout_marginEnd="@dimen/dp_64"
         android:onClick="onLogin"
         android:text="@string/login_in" />
 
@@ -46,9 +54,7 @@
     <Button
         android:id="@+id/login_register_btn"
         style="@style/WanButton.Theme"
-        android:layout_marginStart="@dimen/dp_64"
         android:layout_marginTop="@dimen/dp_12"
-        android:layout_marginEnd="@dimen/dp_64"
         android:onClick="onRegister"
         android:text="@string/register" />
 </LinearLayout>

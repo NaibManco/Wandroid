@@ -1,5 +1,6 @@
 package com.naib.wandroid.base
 
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import kotlinx.coroutines.MainScope
 
@@ -8,4 +9,7 @@ import kotlinx.coroutines.MainScope
  */
 open class BaseFragment : Fragment() {
     val mainScope = MainScope()
+
+    open fun onToolbarCreated(toolbar: Toolbar) {
+    }
 }

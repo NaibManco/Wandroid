@@ -4,6 +4,7 @@ import android.text.TextUtils
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.naib.wandroid.base.persistence.KV
+import com.naib.wandroid.base.utils.LogUtil
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -12,6 +13,7 @@ import java.lang.Exception
 class CookieStore : CookieJar {
     companion object {
         const val COOKIE_ID = "wan_cookie"
+        const val COOKIE = "cookie"
     }
 
     override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
@@ -19,7 +21,7 @@ class CookieStore : CookieJar {
         try {
             KV.put(
                 COOKIE_ID,
-                url.uri().toString(),
+                COOKIE,
                 cookiesToString(cookies)
             )
         } catch (e: Exception) {
@@ -32,7 +34,7 @@ class CookieStore : CookieJar {
             stringToCookies(
                 KV.get(
                     COOKIE_ID,
-                    url.uri().toString()
+                    COOKIE
                 )
             )
         } catch (e: Exception) {
@@ -64,6 +66,7 @@ class CookieStore : CookieJar {
     }
 
     private fun stringToCookies(string: String?): MutableList<Cookie> {
+        LogUtil.i(string)
         if (TextUtils.isEmpty(string)) {
             return mutableListOf()
         }

@@ -2,6 +2,7 @@ package com.naib.wandroid.main.home.data
 
 import com.naib.wandroid.base.network.HttpClient
 import com.naib.wandroid.base.utils.LogUtil
+import com.naib.wandroid.global.Articles
 import java.lang.Exception
 
 /**
@@ -22,21 +23,6 @@ class HomeRepository {
         } catch (e: Exception) {
             e.printStackTrace()
             return emptyList()
-        }
-    }
-
-    suspend fun loadArticles(page: Int): Articles? {
-        return try {
-            val response = homeService.articles(page).execute().body()
-            if (response?.data == null) {
-                LogUtil.e(" request articles, errorMsg = " + response?.errorMsg)
-                return null
-            }
-
-            return response.data
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return null
         }
     }
 

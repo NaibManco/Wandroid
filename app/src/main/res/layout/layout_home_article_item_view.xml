@@ -21,7 +21,8 @@
             android:id="@+id/home_article_item_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_like" />
+            android:src="@drawable/ic_like"
+            android:background="@drawable/bg_circle_ripple"/>
     </com.naib.wandroid.base.widget.SideLinearLayout>
 
     <com.naib.wandroid.base.widget.SideLinearLayout

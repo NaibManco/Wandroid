@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/search_not_found"
+        layout="@layout/layout_not_found"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <com.naib.wandroid.base.widget.WanRefreshLayout
+        android:id="@+id/search_result_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.naib.wandroid.base.widget.WanRecyclerView
+            android:id="@+id/search_result_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.naib.wandroid.base.widget.WanRefreshLayout>
+</FrameLayout>
+

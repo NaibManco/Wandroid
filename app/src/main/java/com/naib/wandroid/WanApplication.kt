@@ -3,8 +3,13 @@ package com.naib.wandroid
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import com.naib.wandroid.base.LoginInterceptor
 import com.naib.wandroid.base.network.HttpClient
 import com.naib.wandroid.base.persistence.KV
+
 
 class WanApplication : Application(), Application.ActivityLifecycleCallbacks {
     private var activities: MutableList<Activity> = mutableListOf()
@@ -19,6 +24,9 @@ class WanApplication : Application(), Application.ActivityLifecycleCallbacks {
         instance = this
         KV.initialize(this)
         registerActivityLifecycleCallbacks(this)
+        HttpClient.addInterceptor(LoginInterceptor::class.java)
+        HttpClient.cookieJar =
+            PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(this))
     }
 
     override fun onActivityPaused(activity: Activity) {

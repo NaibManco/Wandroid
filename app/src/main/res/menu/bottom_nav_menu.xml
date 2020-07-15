@@ -6,17 +6,25 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:orderInCategory="0"
         android:title="@string/title_home" />
-
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:id="@+id/navigation_question"
+        android:icon="@drawable/ic_question"
         android:orderInCategory="1"
-        android:title="@string/title_system" />
-
+        android:title="@string/title_question" />
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:id="@+id/navigation_square"
+        android:icon="@drawable/ic_square"
         android:orderInCategory="2"
+        android:title="@string/title_square" />
+    <item
+        android:id="@+id/navigation_project"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:orderInCategory="3"
         android:title="@string/title_project" />
 
+    <item
+        android:id="@+id/navigation_architecture"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:orderInCategory="4"
+        android:title="@string/title_system" />
 </menu>

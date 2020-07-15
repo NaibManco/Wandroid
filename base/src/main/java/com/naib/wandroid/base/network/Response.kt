@@ -13,4 +13,5 @@ class Response<T> {
         this.errorCode = errorCode
         this.errorMsg = errorMsg
     }
+
 }

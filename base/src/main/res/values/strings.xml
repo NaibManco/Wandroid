@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="base_search_hint">多个搜索词之间用空格隔开</string>
+</resources>

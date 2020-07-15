@@ -1,9 +1,11 @@
 package com.naib.wandroid.main.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,18 +14,26 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.naib.wandroid.R
 import com.naib.wandroid.base.BaseFragment
-import com.naib.wandroid.base.WanRecyclerView
-import com.naib.wandroid.base.WanRefreshLayout
-import com.naib.wandroid.main.home.data.ArticleAdapter
-import com.naib.wandroid.main.home.data.HomeBannerAdapter
-import com.naib.wandroid.main.home.data.HomePageAdapter
-import com.naib.wandroid.main.home.data.ProjectAdapter
+import com.naib.wandroid.base.widget.WanRecyclerView
+import com.naib.wandroid.base.widget.WanRefreshLayout
+import com.naib.wandroid.base.WebViewActivity
+import com.naib.wandroid.global.Article
+import com.naib.wandroid.global.ArticleAdapter
+import com.naib.wandroid.global.OnItemClickListener
+import com.naib.wandroid.main.BaseArticleFragment
+import com.naib.wandroid.main.home.data.*
+import com.naib.wandroid.main.project.ProjectAdapter
 import com.youth.banner.Banner
+import com.youth.banner.config.BannerConfig
+import com.youth.banner.config.IndicatorConfig
+import com.youth.banner.indicator.CircleIndicator
+import com.youth.banner.transformer.AlphaPageTransformer
+import com.youth.banner.util.BannerUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
+class HomeFragment : BaseArticleFragment(), SwipeRefreshLayout.OnRefreshListener,
     WanRecyclerView.OnLoadMoreListener {
 
     private var homeViewModel = viewModels<HomeViewModel>()
@@ -56,6 +66,18 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
         refreshLayout = view.findViewById(R.id.home_refresh_layout)
         refreshLayout.setOnRefreshListener(this)
         banner = view.findViewById(R.id.home_banner)
+        banner.addBannerLifecycleObserver(this)
+        banner.indicator = CircleIndicator(requireContext())
+        banner.setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
+        banner.setIndicatorMargins(
+            IndicatorConfig.Margins(
+                0, 0,
+                BannerConfig.INDICATOR_MARGIN, BannerUtils.dp2px(12f).toInt()
+            )
+        )
+        banner.setBannerGalleryEffect(30, 15)
+        banner.addPageTransformer(AlphaPageTransformer())
+
         adapter = HomeBannerAdapter(emptyList()).apply {
             banner.adapter = this
         }
@@ -67,10 +89,14 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
         /**
          * Article RecyclerView
          */
-        articleListView = WanRecyclerView(requireContext()).apply {
+        articleListView = WanRecyclerView(
+            requireContext()
+        ).apply {
             this.loadMoreListener = this@HomeFragment
             this.layoutManager = LinearLayoutManager(requireContext())
             articleAdapter = ArticleAdapter()
+            articleAdapter.onItemClickListener = this@HomeFragment
+            articleAdapter.onLikeClickListener = this@HomeFragment
             homeViewModel.value.articles.observe(viewLifecycleOwner) {
                 articleAdapter.update(it)
             }
@@ -80,10 +106,14 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
         /**
          * Project RecyclerView
          */
-        projectListView = WanRecyclerView(requireContext()).apply {
+        projectListView = WanRecyclerView(
+            requireContext()
+        ).apply {
             this.loadMoreListener = this@HomeFragment
             this.layoutManager = LinearLayoutManager(requireContext())
             projectAdapter = ProjectAdapter()
+            projectAdapter.onItemClickListener = this@HomeFragment
+            projectAdapter.onLikeClickListener = this@HomeFragment
             homeViewModel.value.projects.observe(viewLifecycleOwner) {
                 projectAdapter.update(it)
             }

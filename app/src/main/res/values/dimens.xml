@@ -6,9 +6,13 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="dp_0">0dp</dimen>
+    <dimen name="dp_0_5">0.5dp</dimen>
     <dimen name="dp_1">1dp</dimen>
     <dimen name="dp_2">2dp</dimen>
     <dimen name="dp_4">4dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_10">10dp</dimen>
     <dimen name="dp_12">12dp</dimen>
@@ -20,6 +24,7 @@
     <dimen name="dp_48">48dp</dimen>
     <dimen name="dp_64">64dp</dimen>
     <dimen name="dp_72">72dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
 
     <dimen name="sp_8">8sp</dimen>
     <dimen name="sp_10">10sp</dimen>
@@ -29,5 +34,4 @@
     <dimen name="sp_18">18sp</dimen>
     <dimen name="sp_24">24dp</dimen>
     <dimen name="sp_36">36sp</dimen>
-    <dimen name="dp_6">6dp</dimen>
 </resources>
