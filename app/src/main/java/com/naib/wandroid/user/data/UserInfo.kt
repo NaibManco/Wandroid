@@ -20,4 +20,15 @@ class UserInfo {
     var type: Int = 0
     var username: String? = null
     var nickname: String? = null
+
+    /**积分**/
+    var coinCount: Int = 0
+
+    /**等级**/
+    var level: Int = 0
+
+    /**排名**/
+    var rank: String? = null
+
+    var userId: Long = 0
 }

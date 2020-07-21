@@ -1,11 +1,10 @@
 package com.naib.wandroid.main.home
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.naib.wandroid.global.GlobalRepository
-import com.naib.wandroid.global.Article
+import com.naib.wandroid.main.article.Article
 import com.naib.wandroid.main.article.ArticleViewModel
 import com.naib.wandroid.main.home.data.Banner
 import com.naib.wandroid.main.home.data.HomeRepository
@@ -21,6 +20,28 @@ class HomeViewModel : ArticleViewModel("article") {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(repository.loadBanners())
         } as MutableLiveData<List<Banner>?>
+
+    override var articles: MutableLiveData<MutableList<Article>?> = MutableLiveData()
+
+    override suspend fun refreshArticles() {
+        articlePage = 0
+        val topArticles = repository.topArticles()
+        val commonArticles = repository.loadArticles(module, articlePage, queries)
+        val finalArticles = mutableListOf<Article>()
+        topArticles?.apply {
+            forEach {
+                it.top = true
+            }
+            finalArticles.addAll(this)
+        }
+        commonArticles?.apply {
+            articlePage = curPage
+            datas?.apply {
+                finalArticles.addAll(this)
+            }
+        }
+        articles.postValue(finalArticles)
+    }
 
     var projects: MutableLiveData<MutableList<Article>?> =
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
@@ -56,7 +77,7 @@ class HomeViewModel : ArticleViewModel("article") {
 
     private val globalRepository: GlobalRepository = GlobalRepository()
 
-    suspend fun collectArticle(id: Int): Boolean {
+    suspend fun collectArticle(id: Long): Boolean {
         return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             globalRepository.collectArticle(id)
         }

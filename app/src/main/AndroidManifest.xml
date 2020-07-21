@@ -36,6 +36,8 @@
         <activity android:name=".user.ProfileActivity"/>
         <activity android:name=".search.SearchActivity"
             android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".share.ShareActivity"/>
+        <activity android:name=".navigation.NavigationActivity"/>
     </application>
 
 </manifest>

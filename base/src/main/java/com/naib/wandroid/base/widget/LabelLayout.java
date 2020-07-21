@@ -104,6 +104,7 @@ public class LabelLayout extends ViewGroup implements View.OnClickListener {
     private void generateDefaultView() {
         for (int i = 0; i < mAdapter.getCount(); ++i) {
             TextView child = new TextView(getContext());
+            child.setClickable(true);
             int _4dp = dip2px(4f);
             child.setPadding(_4dp << 1, _4dp, _4dp << 1, _4dp);
             MarginLayoutParams params = (MarginLayoutParams) generateDefaultLayoutParams();

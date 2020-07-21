@@ -34,12 +34,33 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/profile_email"
+                android:id="@+id/profile_coin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/dp_20"
-                app:layout_constraintBottom_toBottomOf="@id/profile_photo"
-                app:layout_constraintStart_toEndOf="@id/profile_photo" />
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toEndOf="@id/profile_photo"
+                app:layout_constraintTop_toBottomOf="@id/profile_name" />
+
+            <TextView
+                android:id="@+id/profile_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_20"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toEndOf="@id/profile_photo"
+                app:layout_constraintTop_toBottomOf="@id/profile_coin" />
+
+            <TextView
+                android:id="@+id/profile_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/profile_my_rank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

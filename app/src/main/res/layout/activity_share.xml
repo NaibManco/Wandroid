@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:padding="@dimen/dp_12">
 
+    <EditText
+        android:id="@+id/share_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_input_view"
+        android:gravity="left|top"
+        android:hint="@string/share_title_hint"
+        android:lines="3"
+        android:maxLines="3"
+        android:padding="@dimen/dp_12"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/share_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:background="@drawable/bg_input_view"
+        android:hint="@string/share_link_hint"
+        android:padding="@dimen/dp_12"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintTop_toBottomOf="@id/share_title" />
+
+    <TextView
+        android:id="@+id/share_error_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_6"
+        android:visibility="invisible"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@android:color/holo_red_light"
+        app:layout_constraintTop_toBottomOf="@id/share_link" />
+
+    <Button
+        android:id="@+id/btn_share"
+        style="@style/WanButton.Theme"
+        android:layout_marginTop="@dimen/dp_6"
+        android:text="@string/share_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/share_error_tip" />
+
+    <TextView
+        android:id="@+id/share_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

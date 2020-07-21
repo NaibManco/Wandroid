@@ -2,13 +2,14 @@ package com.naib.wandroid.main.home.data
 
 import com.naib.wandroid.base.network.HttpClient
 import com.naib.wandroid.base.utils.LogUtil
-import com.naib.wandroid.global.Articles
+import com.naib.wandroid.main.article.ArticleRepository
+import com.naib.wandroid.main.article.Articles
 import java.lang.Exception
 
 /**
  *  Created by wanglongfei on 2020/5/19
  */
-class HomeRepository {
+class HomeRepository : ArticleRepository() {
     private val homeService = HttpClient.createService(HomeService::class.java)
 
     suspend fun loadBanners(): List<Banner>? {

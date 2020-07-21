@@ -11,13 +11,19 @@ import kotlinx.coroutines.withContext
 class GlobalViewModel : ViewModel() {
     private val globalRepository: GlobalRepository = GlobalRepository()
 
-    suspend fun collectArticle(id: Int): Boolean {
+    suspend fun collectArticle(id: Long): Boolean {
         return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             globalRepository.collectArticle(id)
         }
     }
 
-    suspend fun unCollectArticle(id: Int): Boolean {
+    suspend fun collectWebsite(title: String, author: String, link: String): Boolean {
+        return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
+            globalRepository.collectWebsite(title, author, link)
+        }
+    }
+
+    suspend fun unCollectArticle(id: Long): Boolean {
         return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             globalRepository.unCollectArticle(id)
         }

@@ -9,6 +9,8 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">?android:attr/windowBackground</item>
         <item name="toolbarNavigationButtonStyle">@style/ToolbarNavigationButtonStyle</item>
+        <item name="android:popupMenuStyle">@style/WanPopMenu</item>
+        <item name="android:forceDarkAllowed">true</item>
     </style>
 
     <style name="WanToolBarTitle">
@@ -70,7 +72,7 @@
     </style>
 
     <style name="WanButton.Theme">
-        <item name="android:elevation">@dimen/dp_2</item>
+        <item name="android:elevation">@dimen/dp_0</item>
         <item name="android:background">@drawable/bg_accent_button</item>
     </style>
 
@@ -93,7 +95,7 @@
 
     <style name="WanText.Title">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:textColor">@color/black_80</item>
     </style>
 
@@ -119,5 +121,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/dp_10</item>
+    </style>
+
+    <style name="WanPopMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@drawable/bg_common_item</item>
     </style>
 </resources>

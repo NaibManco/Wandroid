@@ -1,4 +1,4 @@
-package com.naib.wandroid.global
+package com.naib.wandroid.main.article
 
 import android.graphics.Color
 import android.text.TextUtils
@@ -51,11 +51,18 @@ class ArticleAdapter() : BaseArticleAdapter<ArticleAdapter.BlogViewHolder>() {
                 }
             }
             if (article.collect) {
-                this.setColorFilter(Color.RED)
+                this.setColorFilter(resources.getColor(R.color.color_like))
             } else {
                 colorFilter = null
             }
         }
+        holder.categoryView.text = String.format(
+            resources.getString(R.string.article_category),
+            article.superChapterName,
+            article.chapterName
+        )
+        holder.topView.visibility = if (article.top) View.VISIBLE else View.GONE
+        holder.newView.visibility = if (article.fresh) View.VISIBLE else View.GONE
     }
 
     class BlogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -64,5 +71,7 @@ class ArticleAdapter() : BaseArticleAdapter<ArticleAdapter.BlogViewHolder>() {
         var categoryView: TextView = itemView.findViewById(R.id.home_article_item_category)
         var timeView: TextView = itemView.findViewById(R.id.home_article_item_time)
         var favoriteView: ImageView = itemView.findViewById(R.id.home_article_item_favorite)
+        var newView: TextView = itemView.findViewById(R.id.article_label_new)
+        var topView: TextView = itemView.findViewById(R.id.article_label_top)
     }
 }

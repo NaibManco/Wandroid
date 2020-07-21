@@ -2,7 +2,7 @@ package com.naib.wandroid.search
 
 import com.naib.wandroid.base.network.HttpClient
 import com.naib.wandroid.base.utils.LogUtil
-import com.naib.wandroid.global.Articles
+import com.naib.wandroid.main.article.Articles
 import java.lang.Exception
 
 /**

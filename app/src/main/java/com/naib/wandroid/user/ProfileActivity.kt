@@ -1,24 +1,29 @@
 package com.naib.wandroid.user
 
+import android.content.Intent
 import android.net.Uri
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.naib.wandroid.R
 import com.naib.wandroid.base.BaseActivity
-import com.naib.wandroid.base.BaseRecyclerAdapter
 import com.naib.wandroid.base.widget.WanRecyclerView
 import com.naib.wandroid.base.WebViewActivity
-import com.naib.wandroid.global.Article
+import com.naib.wandroid.base.utils.show
+import com.naib.wandroid.main.article.Article
 import com.naib.wandroid.global.OnItemClickListener
+import com.naib.wandroid.global.OnItemLongClickListener
+import com.naib.wandroid.share.ShareActivity
 import com.naib.wandroid.user.data.CollectArticleAdapter
 import com.naib.wandroid.user.data.UserInfoManager
 import com.naib.wandroid.user.data.UserViewModel
@@ -28,12 +33,13 @@ import kotlinx.coroutines.launch
  *  Created by Naib on 2020/6/23
  */
 class ProfileActivity : BaseActivity(), WanRecyclerView.OnLoadMoreListener,
-    OnItemClickListener<Article>, View.OnClickListener {
+    OnItemClickListener<Article>, View.OnClickListener, OnItemLongClickListener<Article> {
     private var viewModel = viewModels<UserViewModel>()
 
     private lateinit var photoView: ImageView
     private lateinit var nameView: TextView
-    private lateinit var emailView: TextView
+    private lateinit var coinView: TextView
+    private lateinit var levelView: TextView
     private lateinit var shareArticle: ImageView
 
     private lateinit var collectArticlesListView: WanRecyclerView
@@ -43,14 +49,14 @@ class ProfileActivity : BaseActivity(), WanRecyclerView.OnLoadMoreListener,
         layoutInflater.inflate(R.layout.activity_profile, container)
         photoView = findViewById(R.id.profile_photo)
         nameView = findViewById(R.id.profile_name)
-        emailView = findViewById(R.id.profile_email)
+        coinView = findViewById(R.id.profile_coin)
+        levelView = findViewById(R.id.profile_level)
         shareArticle = findViewById(R.id.profile_add_shared_article)
         shareArticle.setOnClickListener(this)
 
         val userInfo = UserInfoManager.getUserInfo()
         userInfo?.apply {
             nameView.text = username
-            emailView.text = email
 
             if (TextUtils.isEmpty(icon)) {
                 Glide.with(this@ProfileActivity)
@@ -71,10 +77,20 @@ class ProfileActivity : BaseActivity(), WanRecyclerView.OnLoadMoreListener,
             }
             collectArticleAdapter = CollectArticleAdapter()
             collectArticleAdapter.onItemClickListener = this@ProfileActivity
+            collectArticleAdapter.onItemLongClickListener = this@ProfileActivity
             viewModel.value.collectArticles.observe(this@ProfileActivity) {
                 collectArticleAdapter.update(it)
             }
             this.adapter = collectArticleAdapter
+        }
+
+        lifecycleScope.launch {
+            viewModel.value.getUserInfo()?.apply {
+                coinView.text =
+                    String.format(resources.getString(R.string.profile_my_coin), coinCount)
+                levelView.text =
+                    String.format(resources.getString(R.string.profile_my_level), level)
+            }
         }
     }
 
@@ -93,6 +109,24 @@ class ProfileActivity : BaseActivity(), WanRecyclerView.OnLoadMoreListener,
     }
 
     override fun onClick(v: View?) {
+        startActivity(Intent(this, ShareActivity::class.java))
+    }
 
+    override fun onItemLongClick(view: View, t: Article, position: Int) {
+        val popupMenu = PopupMenu(this, view)
+        popupMenu.inflate(R.menu.profile_collect_menu)
+        popupMenu.setOnMenuItemClickListener {
+            lifecycleScope.launch {
+                val result = viewModel.value.unCollect(t.id, t.originId)
+                if (TextUtils.isEmpty(result)) {
+                    collectArticleAdapter.remove(position)
+                    show(this@ProfileActivity, R.string.profile_uncollect_success)
+                } else {
+                    show(this@ProfileActivity, result)
+                }
+            }
+            return@setOnMenuItemClickListener true
+        }
+        popupMenu.show()
     }
 }

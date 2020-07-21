@@ -1,7 +1,7 @@
 package com.naib.wandroid.main.home.data
 
 import com.naib.wandroid.base.network.Response
-import com.naib.wandroid.global.Articles
+import com.naib.wandroid.main.article.Articles
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

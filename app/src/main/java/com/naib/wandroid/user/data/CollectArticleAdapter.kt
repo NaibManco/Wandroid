@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.naib.wandroid.R
-import com.naib.wandroid.base.BaseRecyclerAdapter
-import com.naib.wandroid.global.Article
-import com.naib.wandroid.global.BaseArticleAdapter
+import com.naib.wandroid.global.OnItemLongClickListener
+import com.naib.wandroid.global.OnLikeClickListener
+import com.naib.wandroid.main.article.Article
+import com.naib.wandroid.main.article.BaseArticleAdapter
 
 /**
  *  Created by Naib on 2020/6/11
  */
 class CollectArticleAdapter() :
     BaseArticleAdapter<CollectArticleAdapter.CollectArticleViewHolder>() {
+    var onItemLongClickListener: OnItemLongClickListener<Article>? = null
 
     constructor(articles: List<Article>) : this() {
         this.data.addAll(articles)
@@ -45,9 +47,16 @@ class CollectArticleAdapter() :
                 onItemClick(article, position)
             }
         }
+        holder.itemView.setOnLongClickListener {
+            onItemLongClickListener?.apply {
+                onItemLongClick(it,article, position)
+            } != null
+        }
         if (position == 0) {
             (holder.itemView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin =
                 resources.getDimensionPixelSize(R.dimen.dp_20)
+        } else{
+            (holder.itemView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin = 0
         }
     }
 

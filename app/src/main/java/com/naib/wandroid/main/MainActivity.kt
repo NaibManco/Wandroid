@@ -4,6 +4,7 @@ import android.content.Intent
 import android.text.TextUtils
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
@@ -23,14 +24,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : BaseActivity() {
-    private var fragments =
-        mutableListOf<BaseFragment>(
-            HomeFragment(),
-            QuestionFragment(),
-            SquareFragment(),
-            ProjectFragment(),
-            ArchitectureFragment()
-        )
+    private var fragments = mutableListOf<BaseFragment>(
+        HomeFragment(),
+        QuestionFragment(),
+        SquareFragment(),
+        ProjectFragment(),
+        ArchitectureFragment()
+    )
+
     private var currentTab = 0
 
     override fun onCreateContentView(root: ViewGroup) {
@@ -69,7 +70,7 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        mainScope.launch {
+        lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val userInfo = UserInfoManager.getUserInfo()
                 val size: Int = resources.getDimensionPixelSize(R.dimen.dp_32)

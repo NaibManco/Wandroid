@@ -1,7 +1,6 @@
 package com.naib.wandroid.main.architecture.data
 
 import com.naib.wandroid.base.network.HttpClient
-import com.naib.wandroid.global.Articles
 import java.lang.Exception
 
 /**

@@ -1,9 +1,12 @@
 package com.naib.wandroid.user.data
 
+import android.text.TextUtils
+import com.naib.wandroid.R
+import com.naib.wandroid.WanApplication
 import com.naib.wandroid.base.network.HttpClient
 import com.naib.wandroid.base.network.Response
 import com.naib.wandroid.base.utils.LogUtil
-import com.naib.wandroid.global.Articles
+import com.naib.wandroid.main.article.Articles
 import java.lang.Exception
 
 /**
@@ -34,6 +37,16 @@ class UserRepository {
         }
     }
 
+    suspend fun userInfo(): Response<UserInfo>? {
+        return try {
+            val response = userService.userInfo()
+            response
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
     suspend fun loadCollectArticles(page: Int): Articles? {
         return try {
             val response = userService.collectedArticles(page)
@@ -46,6 +59,22 @@ class UserRepository {
         } catch (e: Exception) {
             e.printStackTrace()
             return null
+        }
+    }
+
+    suspend fun unCollect(id: Long, originId: Long): String {
+        return try {
+            val response = userService.unCollectArticle(id.toString(), originId.toString())
+            if (response.errorCode != 0) {
+                if (TextUtils.isEmpty(response.errorMsg)) {
+                    return WanApplication.instance!!.resources.getString(R.string.common_error)
+                }
+                return response.errorMsg
+            }
+            return ""
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return e.message.toString()
         }
     }
 }

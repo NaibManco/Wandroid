@@ -17,6 +17,12 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/toolbar_navigation"
+        android:orderInCategory="2"
+        android:title="@string/menu_navigation"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/toolbar_about"
         android:orderInCategory="3"
         android:title="@string/menu_about"

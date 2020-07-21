@@ -6,6 +6,7 @@
     <color name="ic_launcher_background">#0099CC</color>
 
     <color name="black_222222">#222222</color>
+    <color name="black_1">#02000000</color>
     <color name="black_5">#0C000000</color>
     <color name="black_10">#1A000000</color>
     <color name="black_20">#33000000</color>

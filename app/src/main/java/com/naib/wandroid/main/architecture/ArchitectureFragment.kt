@@ -1,30 +1,25 @@
 package com.naib.wandroid.main.architecture
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.naib.wandroid.R
-import com.naib.wandroid.base.BaseFragment
-import com.naib.wandroid.base.WebViewActivity
 import com.naib.wandroid.base.utils.notEmpty
 import com.naib.wandroid.base.widget.LabelLayout
 import com.naib.wandroid.base.widget.WanRecyclerView
 import com.naib.wandroid.base.widget.WanRefreshLayout
 import com.naib.wandroid.main.architecture.data.Architecture
 import com.naib.wandroid.main.architecture.data.ArchitectureViewModel
-import com.naib.wandroid.global.Article
-import com.naib.wandroid.global.ArticleAdapter
-import com.naib.wandroid.global.OnItemClickListener
+import com.naib.wandroid.main.article.ArticleAdapter
 import com.naib.wandroid.main.BaseArticleFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,12 +49,8 @@ class ArchitectureFragment : BaseArticleFragment(), View.OnClickListener,
 
     private var halfDisplayHeight = 0
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_architecture, container, false)
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_architecture
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,7 +102,6 @@ class ArchitectureFragment : BaseArticleFragment(), View.OnClickListener,
 
         refreshLayout = view.findViewById(R.id.architecture_refresh)
         refreshLayout.setOnRefreshListener(this)
-        refreshLayout.isRefreshing = true
 
         architectureViewModel.value.architecture.observe(viewLifecycleOwner) {
             firstArchitecture.clear()
@@ -156,8 +146,9 @@ class ArchitectureFragment : BaseArticleFragment(), View.OnClickListener,
     }
 
     private fun loadArticles(cid: Int?) {
-        mainScope.launch {
+        lifecycleScope.launch {
             cid?.let { architectureViewModel.value.refreshArticles(it) }
+            finishLoading()
         }
     }
 
@@ -191,8 +182,8 @@ class ArchitectureFragment : BaseArticleFragment(), View.OnClickListener,
     }
 
     override fun onRefresh() {
-        mainScope.launch {
-            withContext(mainScope.coroutineContext + Dispatchers.IO) {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
                 selectedArchitecture?.apply {
                     architectureViewModel.value.refreshArticles(this.id)
                 }

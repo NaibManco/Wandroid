@@ -11,8 +11,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.naib.wandroid.R
-import com.naib.wandroid.global.Article
-import com.naib.wandroid.global.BaseArticleAdapter
+import com.naib.wandroid.main.article.Article
+import com.naib.wandroid.main.article.BaseArticleAdapter
 
 /**
  *  Created by Naib on 2020/6/11
@@ -62,7 +62,7 @@ class ProjectAdapter() : BaseArticleAdapter<ProjectAdapter.BlogViewHolder>() {
                 }
             }
             if (article.collect) {
-                this.setColorFilter(Color.RED)
+                this.setColorFilter(resources.getColor(R.color.color_like))
             } else {
                 colorFilter = null
             }

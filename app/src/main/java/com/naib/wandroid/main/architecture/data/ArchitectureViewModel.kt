@@ -1,14 +1,12 @@
 package com.naib.wandroid.main.architecture.data
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.naib.wandroid.global.GlobalRepository
-import com.naib.wandroid.global.Article
+import com.naib.wandroid.main.article.Article
 import com.naib.wandroid.main.article.ArticleViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ArchitectureViewModel : ArticleViewModel("article") {
@@ -48,7 +46,7 @@ class ArchitectureViewModel : ArticleViewModel("article") {
 
     private val globalRepository: GlobalRepository = GlobalRepository()
 
-    suspend fun collectArticle(id: Int): Boolean {
+    suspend fun collectArticle(id: Long): Boolean {
         return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             globalRepository.collectArticle(id)
         }

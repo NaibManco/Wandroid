@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.naib.wandroid.R
 import com.naib.wandroid.base.BaseActivity
 import com.naib.wandroid.user.data.UserViewModel
@@ -50,7 +51,7 @@ class LoginActivity : BaseActivity(), TextWatcher {
             return
         }
 
-        mainScope.launch {
+        lifecycleScope.launch {
             val response =
                 model.value.doLogin(userName.text.toString(), password.text.toString())
             response?.apply {
@@ -71,7 +72,7 @@ class LoginActivity : BaseActivity(), TextWatcher {
             return
         }
 
-        mainScope.launch {
+        lifecycleScope.launch {
             val response =
                 model.value.doRegister(userName.text.toString(), password.text.toString())
             response?.apply {

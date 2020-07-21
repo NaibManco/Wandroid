@@ -1,6 +1,4 @@
-package com.naib.wandroid.global
-
-import com.naib.wandroid.global.Article
+package com.naib.wandroid.main.article
 
 /**
  *  Created by Naib on 2020/6/15

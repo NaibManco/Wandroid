@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.naib.wandroid.R
 import com.naib.wandroid.base.widget.WanRecyclerView
 import com.naib.wandroid.base.widget.WanRefreshLayout
-import com.naib.wandroid.global.ArticleAdapter
+import com.naib.wandroid.main.article.ArticleAdapter
 import com.naib.wandroid.main.BaseArticleFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -76,8 +77,8 @@ class SearchResultFragment : BaseArticleFragment(), SwipeRefreshLayout.OnRefresh
     }
 
     override fun onRefresh() {
-        mainScope.launch {
-            withContext(mainScope.coroutineContext + Dispatchers.IO) {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
                 words?.let { viewModel.value.refreshArticles(it) }
             }
             refreshLayout.isRefreshing = false

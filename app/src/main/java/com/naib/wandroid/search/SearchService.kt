@@ -1,7 +1,7 @@
 package com.naib.wandroid.search
 
 import com.naib.wandroid.base.network.Response
-import com.naib.wandroid.global.Articles
+import com.naib.wandroid.main.article.Articles
 import retrofit2.http.*
 
 /**

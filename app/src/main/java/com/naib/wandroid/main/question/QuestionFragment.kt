@@ -4,20 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.naib.wandroid.R
-import com.naib.wandroid.base.BaseFragment
 import com.naib.wandroid.base.widget.WanRecyclerView
 import com.naib.wandroid.base.widget.WanRefreshLayout
-import com.naib.wandroid.global.Article
-import com.naib.wandroid.global.ArticleAdapter
-import com.naib.wandroid.global.OnItemClickListener
+import com.naib.wandroid.main.article.ArticleAdapter
 import com.naib.wandroid.main.BaseArticleFragment
-import com.naib.wandroid.main.project.ProjectViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,12 +29,8 @@ class QuestionFragment : BaseArticleFragment(), SwipeRefreshLayout.OnRefreshList
     private lateinit var recyclerView: WanRecyclerView
     private lateinit var adapter: ArticleAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_question, container, false)
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_question
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,16 +47,19 @@ class QuestionFragment : BaseArticleFragment(), SwipeRefreshLayout.OnRefreshList
 
         viewModel.value.articles.observe(viewLifecycleOwner) {
             adapter.update(it)
-            recyclerView.smoothScrollToPosition(0)
+            if (refreshLayout.isRefreshing) {
+                recyclerView.smoothScrollToPosition(0)
+                refreshLayout.isRefreshing = false
+            }
+            finishLoading()
         }
     }
 
     override fun onRefresh() {
-        mainScope.launch {
-            withContext(mainScope.coroutineContext + Dispatchers.IO) {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
                 viewModel.value.refreshArticles()
             }
-            refreshLayout.isRefreshing = false
         }
     }
 

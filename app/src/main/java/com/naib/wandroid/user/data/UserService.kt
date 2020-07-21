@@ -1,7 +1,8 @@
 package com.naib.wandroid.user.data
 
+import com.naib.wandroid.base.network.NoData
 import com.naib.wandroid.base.network.Response
-import com.naib.wandroid.global.Articles
+import com.naib.wandroid.main.article.Articles
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -33,4 +34,13 @@ interface UserService {
     suspend fun collectedArticles(
         @Path("page") page: Int
     ): Response<Articles>
+
+    @POST("lg/uncollect/{id}/json")
+    suspend fun unCollectArticle(
+        @Path("id") id: String,
+        @Query("originId") originId: String
+    ): Response<NoData>
+
+    @GET("/lg/coin/userinfo/json")
+    suspend fun userInfo(): Response<UserInfo>
 }

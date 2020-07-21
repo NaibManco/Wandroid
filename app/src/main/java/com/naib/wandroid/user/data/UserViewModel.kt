@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.naib.wandroid.base.network.Response
-import com.naib.wandroid.global.Article
+import com.naib.wandroid.main.article.Article
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,6 +22,12 @@ class UserViewModel : ViewModel() {
     suspend fun doRegister(userName: String, password: String): Response<UserInfo>? {
         return withContext(viewModelScope.coroutineContext) {
             repository.userRegister(userName, password)
+        }
+    }
+
+    suspend fun getUserInfo(): UserInfo? {
+        return withContext(viewModelScope.coroutineContext) {
+            repository.userInfo()?.data
         }
     }
 
@@ -56,6 +62,12 @@ class UserViewModel : ViewModel() {
                 list.addAll(this)
                 collectArticles.value = list
             }
+        }
+    }
+
+    suspend fun unCollect(id: Long, originId: Long): String {
+        return withContext(viewModelScope.coroutineContext) {
+            repository.unCollect(id, originId)
         }
     }
 }

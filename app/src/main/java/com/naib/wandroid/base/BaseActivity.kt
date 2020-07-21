@@ -4,21 +4,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.bumptech.glide.Glide
 import com.naib.wandroid.R
+import com.naib.wandroid.navigation.NavigationActivity
 import com.naib.wandroid.search.SearchActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 
 abstract class BaseActivity : AppCompatActivity() {
-    val mainScope = MainScope()
 
     lateinit var rootView: ViewGroup
     lateinit var contentContainer: FrameLayout
     lateinit var toolbar: Toolbar
+    lateinit var loadingView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +55,6 @@ abstract class BaseActivity : AppCompatActivity() {
     open fun onCreateToolbar(toolbar: Toolbar) {
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mainScope.cancel()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
@@ -72,6 +71,9 @@ abstract class BaseActivity : AppCompatActivity() {
             R.id.toolbar_like -> {
 
             }
+            R.id.toolbar_navigation -> {
+                startActivity(Intent(this,NavigationActivity::class.java))
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -79,5 +81,6 @@ abstract class BaseActivity : AppCompatActivity() {
     companion object {
         const val MENU_SEARCH = 0
         const val MENU_LIKE = 1
+        const val MENU_NAVIGATION = 2
     }
 }

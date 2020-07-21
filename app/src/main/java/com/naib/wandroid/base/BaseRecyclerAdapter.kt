@@ -26,6 +26,18 @@ open abstract class BaseRecyclerAdapter<T, VH : RecyclerView.ViewHolder?> :
         }
     }
 
+    fun updateTop(list: List<T>?) {
+        list?.apply {
+            this@BaseRecyclerAdapter.data.addAll(0, this)
+            notifyDataSetChanged()
+        }
+    }
+
+    fun remove(position: Int) {
+        data.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     override fun getItemCount(): Int {
         return if (null == data) 0 else data.size
     }

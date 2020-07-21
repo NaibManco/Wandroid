@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.naib.wandroid.R
 import com.naib.wandroid.base.BaseFragment
@@ -41,7 +42,7 @@ class SearchFragment : BaseFragment(), LabelLayout.OnItemClickListener {
         clearHistory = view.findViewById(R.id.text_clear_history)
         historyLayout = view.findViewById(R.id.layout_search_history)
 
-        mainScope.launch {
+        lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 viewModel.value.loadHotKey()
             }?.apply {

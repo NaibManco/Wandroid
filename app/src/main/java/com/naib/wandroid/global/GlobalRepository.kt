@@ -10,13 +10,13 @@ import java.lang.Exception
 class GlobalRepository {
     private var globalService: GlobalService? = null
 
-    suspend fun collectArticle(id: Int): Boolean {
+    suspend fun collectArticle(id: Long): Boolean {
         return try {
             if (globalService == null) {
                 globalService = HttpClient.createService(GlobalService::class.java)
             }
             val response = globalService!!.collectArticle(id)
-            if (response.data == null || response.errorCode != 0) {
+            if (response.errorCode != 0) {
                 LogUtil.e(" request projects, errorMsg = " + response.errorMsg)
                 return false
             }
@@ -28,13 +28,31 @@ class GlobalRepository {
         }
     }
 
-    suspend fun unCollectArticle(id: Int): Boolean {
+    suspend fun unCollectArticle(id: Long): Boolean {
         return try {
             if (globalService == null) {
                 globalService = HttpClient.createService(GlobalService::class.java)
             }
             val response = globalService!!.unCollectArticle(id)
-            if (response.data == null || response.errorCode != 0) {
+            if (response.errorCode != 0) {
+                LogUtil.e(" request projects, errorMsg = " + response.errorMsg)
+                return false
+            }
+
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+    }
+
+    suspend fun collectWebsite(title: String, author: String, link: String): Boolean {
+        return try {
+            if (globalService == null) {
+                globalService = HttpClient.createService(GlobalService::class.java)
+            }
+            val response = globalService!!.collectWebsite(title, author, link)
+            if (response.errorCode != 0) {
                 LogUtil.e(" request projects, errorMsg = " + response.errorMsg)
                 return false
             }

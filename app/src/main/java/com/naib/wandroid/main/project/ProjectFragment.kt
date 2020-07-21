@@ -1,26 +1,21 @@
 package com.naib.wandroid.main.project
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.naib.wandroid.R
-import com.naib.wandroid.base.BaseFragment
-import com.naib.wandroid.base.WebViewActivity
 import com.naib.wandroid.base.widget.LabelLayout
 import com.naib.wandroid.base.widget.WanRecyclerView
 import com.naib.wandroid.base.widget.WanRefreshLayout
 import com.naib.wandroid.main.architecture.data.Architecture
-import com.naib.wandroid.global.Article
-import com.naib.wandroid.global.OnItemClickListener
 import com.naib.wandroid.main.BaseArticleFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,12 +37,8 @@ class ProjectFragment : BaseArticleFragment(), SwipeRefreshLayout.OnRefreshListe
     private var categories = mutableListOf<Architecture>()
     private lateinit var categoryLayout: LabelLayout
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_project, container, false)
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_project
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,7 +57,10 @@ class ProjectFragment : BaseArticleFragment(), SwipeRefreshLayout.OnRefreshListe
 
         projectViewModel.value.articles.observe(viewLifecycleOwner) {
             adapter.update(it)
-            recyclerView.smoothScrollToPosition(0)
+            if (refreshLayout.isRefreshing) {
+                refreshLayout.isRefreshing = false
+                recyclerView.smoothScrollToPosition(0)
+            }
         }
 
         LayoutInflater.from(requireContext())
@@ -107,19 +101,19 @@ class ProjectFragment : BaseArticleFragment(), SwipeRefreshLayout.OnRefreshListe
     }
 
     private fun loadProjects(cid: Int?) {
-        mainScope.launch {
+        lifecycleScope.launch {
             cid?.let { projectViewModel.value.refreshProjects(it) }
         }
     }
 
     override fun onRefresh() {
-        mainScope.launch {
-            withContext(mainScope.coroutineContext + Dispatchers.IO) {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
                 currentArchitecture?.apply {
                     projectViewModel.value.refreshProjects(this.id)
                 }
             }
-            refreshLayout.isRefreshing = false
+            finishLoading()
         }
     }
 

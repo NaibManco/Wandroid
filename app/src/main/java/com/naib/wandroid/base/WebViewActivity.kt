@@ -14,13 +14,18 @@ import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.widget.FrameLayout
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
 import com.naib.wandroid.R
 import com.naib.wandroid.WanApplication
 import com.naib.wandroid.base.utils.LogUtil
+import com.naib.wandroid.base.utils.show
+import com.naib.wandroid.global.GlobalViewModel
 import com.naib.wandroid.search.SearchActivity
+import kotlinx.coroutines.launch
 
 /**
  * Created by Naib on 2020/6/15
@@ -33,7 +38,7 @@ open class WebViewActivity : BaseActivity() {
         private const val KEY_ID: String = "title"
         private const val KEY_LIKE: String = "title"
 
-        fun launch(url: String, title: String, id: Int, like: Boolean) {
+        fun launch(url: String, title: String, id: Long, like: Boolean) {
             val context = WanApplication.instance!!.topActivity
             var intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra(KEY_URL, url)
@@ -51,6 +56,8 @@ open class WebViewActivity : BaseActivity() {
             context.startActivity(intent)
         }
     }
+
+    private val globalViewModel = viewModels<GlobalViewModel>()
 
     /**
      * 标题
@@ -70,7 +77,7 @@ open class WebViewActivity : BaseActivity() {
     /**
      * 文章id
      */
-    private var id: Int = 0;
+    private var id: Long = 0
 
     override fun onCreateContentView(container: ViewGroup) {
         getIntentData()
@@ -92,7 +99,7 @@ open class WebViewActivity : BaseActivity() {
     open fun getIntentData() {
         title = intent.getStringExtra(KEY_TITLE)
         url = intent.getStringExtra(KEY_URL)
-        id = intent.getIntExtra(KEY_ID, -1)
+        id = intent.getLongExtra(KEY_ID, -1)
         like = intent.getBooleanExtra(KEY_LIKE, false)
     }
 
@@ -153,8 +160,44 @@ open class WebViewActivity : BaseActivity() {
                 startActivity(intent)
                 return true
             }
+            R.id.toolbar_like -> {
+                if (like) unCollect(item) else collect(item)
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun collect(item: MenuItem) {
+        lifecycleScope.launch {
+            var success = if (id > 0) {
+                globalViewModel.value.collectArticle(id)
+            } else {
+                globalViewModel.value.collectWebsite(toolbar.title.toString(), "", url!!)
+            }
+            if (success) {
+                like = true
+                likeIcon(item)
+            } else {
+                show(this@WebViewActivity, R.string.common_error)
+            }
+        }
+    }
+
+    private fun unCollect(item: MenuItem) {
+        lifecycleScope.launch {
+            var success = if (id > 0) {
+                globalViewModel.value.unCollectArticle(id)
+            } else {
+                globalViewModel.value.unCollectArticle(id)
+            }
+            if (success) {
+                like = false
+                item.icon = getDrawable(R.drawable.ic_like)
+            } else {
+                show(this@WebViewActivity, R.string.common_error)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -163,12 +206,19 @@ open class WebViewActivity : BaseActivity() {
             getItem(MENU_SEARCH).isVisible = false
             getItem(MENU_LIKE).isVisible = true
             if (like) {
-                val drawable = getDrawable(R.drawable.ic_like)
-                drawable?.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
-                getItem(MENU_LIKE).icon = drawable
+                likeIcon(getItem(MENU_LIKE))
             }
             add(Menu.NONE, menuOpenInBrowser, Menu.NONE, R.string.menu_open_in_browser)
         }
         return result
+    }
+
+    private fun likeIcon(item: MenuItem) {
+        val drawable = getDrawable(R.drawable.ic_like)
+        drawable?.setColorFilter(
+            resources.getColor(R.color.color_like),
+            PorterDuff.Mode.SRC_ATOP
+        )
+        item.icon = drawable
     }
 }

@@ -1,7 +1,6 @@
 package com.naib.wandroid.main.article
 
 import com.naib.wandroid.base.network.Response
-import com.naib.wandroid.global.Articles
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
@@ -17,4 +16,7 @@ interface ArticleService {
         @Path("page") page: Int,
         @QueryMap queries: Map<String, String>?
     ): Response<Articles>
+
+    @GET("/article/top/json")
+    suspend fun topArticles(): Response<MutableList<Article>>
 }
