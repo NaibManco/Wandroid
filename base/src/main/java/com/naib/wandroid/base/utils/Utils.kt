@@ -56,6 +56,6 @@ operator fun <T> MutableLiveData<MutableList<T>>.plusAssign(values: List<T>) {
     this.value = value
 }
 
-fun Drawable.colorFilter(color: Int) {
+fun Drawable.intColorFilter(color: Int) {
     this.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
 }

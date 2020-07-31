@@ -13,6 +13,12 @@
         <item name="android:forceDarkAllowed">true</item>
     </style>
 
+    <style name="AppTheme.Fullscreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
     <style name="WanToolBarTitle">
         <item name="android:textColor">@color/primary_dark_material_light</item>
         <item name="android:textSize">@dimen/sp_16</item>

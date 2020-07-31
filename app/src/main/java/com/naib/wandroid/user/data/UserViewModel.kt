@@ -70,4 +70,44 @@ class UserViewModel : ViewModel() {
             repository.unCollect(id, originId)
         }
     }
+
+    private var sharedArticlePage = 1
+
+    var sharedArticles: MutableLiveData<MutableList<Article>?> =
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+            val articles = repository.loadSharedArticles(sharedArticlePage)
+            articles?.apply {
+                collectArticlePage = this.curPage
+                emit(this.datas)
+            }
+        } as MutableLiveData<MutableList<Article>?>
+
+    suspend fun refreshSharedArticles() {
+        sharedArticlePage = 1
+        repository.loadSharedArticles(sharedArticlePage)?.apply {
+            sharedArticlePage = curPage
+            datas?.apply {
+                sharedArticles.postValue(this)
+            }
+        }
+    }
+
+    fun loadMoreSharedArticles() {
+        viewModelScope.launch {
+            withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
+                repository.loadSharedArticles(sharedArticlePage)
+            }?.datas?.apply {
+                val list = mutableListOf<Article>()
+                sharedArticles.value?.let { list.addAll(it) }
+                list.addAll(this)
+                sharedArticles.value = list
+            }
+        }
+    }
+
+    suspend fun unShare(id: Long): String {
+        return withContext(viewModelScope.coroutineContext) {
+            repository.unShare(id)
+        }
+    }
 }

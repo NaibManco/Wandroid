@@ -77,4 +77,36 @@ class UserRepository {
             return e.message.toString()
         }
     }
+
+
+    suspend fun loadSharedArticles(page: Int): Articles? {
+        return try {
+            val response = userService.sharedArticles(page)
+            if (response.data == null) {
+                LogUtil.e(" loadSharedArticles, errorMsg = " + response.errorMsg)
+                return null
+            }
+
+            return response.data?.shareArticles
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
+    }
+
+    suspend fun unShare(id: Long): String {
+        return try {
+            val response = userService.unShareArticle(id)
+            if (response.errorCode != 0) {
+                if (TextUtils.isEmpty(response.errorMsg)) {
+                    return WanApplication.instance!!.resources.getString(R.string.common_error)
+                }
+                return response.errorMsg
+            }
+            return ""
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return e.message.toString()
+        }
+    }
 }

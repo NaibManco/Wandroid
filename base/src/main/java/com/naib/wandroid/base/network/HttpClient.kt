@@ -29,7 +29,7 @@ class HttpClient private constructor() {
             .writeTimeout(HTTP_TIME_OUT, TimeUnit.SECONDS)
             .addInterceptor(logging)
 
-        INTERCEPTORS.forEach { okHttpClientBuilder.addInterceptor(it) }
+        INTERCEPTORS.forEach { okHttpClientBuilder.addNetworkInterceptor(it) }
 
         Retrofit.Builder()
             .baseUrl(BASE_URL)

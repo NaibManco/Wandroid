@@ -12,15 +12,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.just.agentweb.AgentWeb
-import com.just.agentweb.WebChromeClient
-import com.just.agentweb.WebViewClient
+import com.just.agentweb.*
 import com.naib.wandroid.R
 import com.naib.wandroid.WanApplication
+import com.naib.wandroid.base.network.CookieStore
 import com.naib.wandroid.base.utils.LogUtil
 import com.naib.wandroid.base.utils.show
 import com.naib.wandroid.global.GlobalViewModel
@@ -35,8 +35,8 @@ open class WebViewActivity : BaseActivity() {
     companion object {
         private const val KEY_URL: String = "url"
         private const val KEY_TITLE: String = "title"
-        private const val KEY_ID: String = "title"
-        private const val KEY_LIKE: String = "title"
+        private const val KEY_ID: String = "articleId"
+        private const val KEY_LIKE: String = "like"
 
         fun launch(url: String, title: String, id: Long, like: Boolean) {
             val context = WanApplication.instance!!.topActivity
@@ -79,18 +79,23 @@ open class WebViewActivity : BaseActivity() {
      */
     private var id: Long = 0
 
+    private lateinit var agentWeb: AgentWeb
+
     override fun onCreateContentView(container: ViewGroup) {
         getIntentData()
         if (TextUtils.isEmpty(url)) {
             throw RuntimeException("Url cannot be empty")
         }
-        AgentWeb.with(this).setAgentWebParent(container, FrameLayout.LayoutParams(-1, -1))
-            .useDefaultIndicator(getColor(R.color.colorAccent))
-            .setWebChromeClient(receivedTitleCallback)
-            .setWebViewClient(webViewClientCallback)
-            .createAgentWeb()
-            .ready()
-            .go(url)
+        AgentWebConfig.syncCookie(url, CookieStore.loadCookie())
+        LogUtil.i("cookie = " + CookieStore.loadCookie())
+        agentWeb =
+            AgentWeb.with(this).setAgentWebParent(container, FrameLayout.LayoutParams(-1, -1))
+                .useDefaultIndicator(getColor(R.color.colorAccent))
+                .setWebChromeClient(receivedTitleCallback)
+                .setWebViewClient(webViewClientCallback)
+                .createAgentWeb()
+                .ready()
+                .go(url)
     }
 
     /**
@@ -220,5 +225,11 @@ open class WebViewActivity : BaseActivity() {
             PorterDuff.Mode.SRC_ATOP
         )
         item.icon = drawable
+    }
+
+    override fun onBackPressed() {
+        if (!agentWeb.back()) {
+            finish()
+        }
     }
 }

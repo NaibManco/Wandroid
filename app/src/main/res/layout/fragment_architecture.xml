@@ -14,8 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/black_5">
+            android:layout_height="50dp">
 
             <View
                 android:id="@+id/architecture_divider"

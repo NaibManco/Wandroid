@@ -14,6 +14,26 @@ class CookieStore : CookieJar {
     companion object {
         const val COOKIE_ID = "wan_cookie"
         const val COOKIE = "cookie"
+        var cookie: String? = null
+
+        fun loadCookie(): String? {
+            if (!TextUtils.isEmpty(cookie)) {
+                return cookie
+            }
+            return KV.get(COOKIE)
+        }
+
+        fun storeCookie(cookie: String) {
+            if (TextUtils.isEmpty(cookie) || cookie != CookieStore.cookie) {
+                CookieStore.cookie = cookie
+                KV.put(COOKIE, cookie)
+            }
+        }
+
+        fun clearCookie() {
+            cookie = null
+            KV.put(COOKIE, "")
+        }
     }
 
     override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {

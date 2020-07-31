@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/dp_16"
     android:maxHeight="300dp"
-    android:background="@color/color_category_label_panel">
+    android:background="?android:attr/windowBackground">
 
     <com.naib.wandroid.base.widget.LabelLayout
         android:id="@+id/category_label_layout"

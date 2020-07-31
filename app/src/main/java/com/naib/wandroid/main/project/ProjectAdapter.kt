@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.naib.wandroid.R
+import com.naib.wandroid.global.ImageViewActivity
 import com.naib.wandroid.main.article.Article
 import com.naib.wandroid.main.article.BaseArticleAdapter
 
@@ -48,6 +49,12 @@ class ProjectAdapter() : BaseArticleAdapter<ProjectAdapter.BlogViewHolder>() {
             Glide.with(it)
                 .load(Uri.parse(article.envelopePic))
                 .into(it)
+            it.setOnClickListener {
+                ImageViewActivity.launch(
+                    holder.itemView.context,
+                    article.envelopePic!!
+                )
+            }
         }
 
         holder.itemView.setOnClickListener {

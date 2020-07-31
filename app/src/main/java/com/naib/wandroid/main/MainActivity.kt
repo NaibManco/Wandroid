@@ -1,6 +1,8 @@
 package com.naib.wandroid.main
 
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.text.TextUtils
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
@@ -91,8 +93,11 @@ class MainActivity : BaseActivity() {
                 }
             }.apply {
                 toolbar.navigationIcon = this
+                toolbar.navigationIcon?.colorFilter =
+                    PorterDuffColorFilter(getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP)
             }
         }
+
         toolbar.setNavigationOnClickListener {
             if (UserInfoManager.getUserInfo() == null) {
                 startActivity(Intent(this, LoginActivity::class.java))

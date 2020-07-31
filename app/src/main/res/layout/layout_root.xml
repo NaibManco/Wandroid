@@ -6,14 +6,13 @@
     android:background="?android:attr/windowBackground"
     android:orientation="vertical">
 
-
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginTop="-2dp"
         android:background="?android:attr/windowBackground"
-        android:elevation="@dimen/dp_1"
+        android:elevation="@dimen/dp_0_5"
         app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
         app:titleMarginStart="0dp"

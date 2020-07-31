@@ -24,7 +24,7 @@ import com.naib.wandroid.main.article.Article
 import com.naib.wandroid.global.OnItemClickListener
 import com.naib.wandroid.global.OnItemLongClickListener
 import com.naib.wandroid.share.ShareActivity
-import com.naib.wandroid.user.data.CollectArticleAdapter
+import com.naib.wandroid.user.data.ProfileArticleAdapter
 import com.naib.wandroid.user.data.UserInfoManager
 import com.naib.wandroid.user.data.UserViewModel
 import kotlinx.coroutines.launch
@@ -40,10 +40,11 @@ class ProfileActivity : BaseActivity(), WanRecyclerView.OnLoadMoreListener,
     private lateinit var nameView: TextView
     private lateinit var coinView: TextView
     private lateinit var levelView: TextView
+    private lateinit var rankView: TextView
     private lateinit var shareArticle: ImageView
 
     private lateinit var collectArticlesListView: WanRecyclerView
-    private lateinit var collectArticleAdapter: CollectArticleAdapter
+    private lateinit var collectArticleAdapter: ProfileArticleAdapter
 
     override fun onCreateContentView(container: ViewGroup) {
         layoutInflater.inflate(R.layout.activity_profile, container)
@@ -51,8 +52,10 @@ class ProfileActivity : BaseActivity(), WanRecyclerView.OnLoadMoreListener,
         nameView = findViewById(R.id.profile_name)
         coinView = findViewById(R.id.profile_coin)
         levelView = findViewById(R.id.profile_level)
+        rankView = findViewById(R.id.profile_rank)
         shareArticle = findViewById(R.id.profile_add_shared_article)
         shareArticle.setOnClickListener(this)
+        photoView.setColorFilter(resources.getColor(R.color.colorAccent))
 
         val userInfo = UserInfoManager.getUserInfo()
         userInfo?.apply {
@@ -75,7 +78,7 @@ class ProfileActivity : BaseActivity(), WanRecyclerView.OnLoadMoreListener,
             this.layoutManager = LinearLayoutManager(this@ProfileActivity).apply {
                 orientation = RecyclerView.HORIZONTAL
             }
-            collectArticleAdapter = CollectArticleAdapter()
+            collectArticleAdapter = ProfileArticleAdapter()
             collectArticleAdapter.onItemClickListener = this@ProfileActivity
             collectArticleAdapter.onItemLongClickListener = this@ProfileActivity
             viewModel.value.collectArticles.observe(this@ProfileActivity) {
@@ -90,6 +93,7 @@ class ProfileActivity : BaseActivity(), WanRecyclerView.OnLoadMoreListener,
                     String.format(resources.getString(R.string.profile_my_coin), coinCount)
                 levelView.text =
                     String.format(resources.getString(R.string.profile_my_level), level)
+                rankView.text = String.format(resources.getString(R.string.profile_my_rank), rank)
             }
         }
     }

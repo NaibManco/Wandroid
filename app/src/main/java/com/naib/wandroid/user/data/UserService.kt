@@ -43,4 +43,10 @@ interface UserService {
 
     @GET("/lg/coin/userinfo/json")
     suspend fun userInfo(): Response<UserInfo>
+
+    @GET("/user/lg/private_articles/{page}/json")
+    suspend fun sharedArticles(@Path("page") page: Int): Response<SharedArticles>
+
+    @POST("lg/user_article/delete/{id}/json")
+    suspend fun unShareArticle(@Path("id") id: Long): Response<NoData>
 }

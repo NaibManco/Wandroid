@@ -1,3 +1,4 @@
+include ':photoView'
 rootProject.name='WanAndroid'
 include ':app'
 include ':base'

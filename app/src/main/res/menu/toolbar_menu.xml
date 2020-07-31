@@ -23,8 +23,14 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/toolbar_about"
+        android:id="@+id/toolbar_tool"
         android:orderInCategory="3"
+        android:title="@string/menu_tool"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/toolbar_about"
+        android:orderInCategory="4"
         android:title="@string/menu_about"
         app:showAsAction="never" />
 </menu>

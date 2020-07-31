@@ -72,7 +72,13 @@ abstract class BaseActivity : AppCompatActivity() {
 
             }
             R.id.toolbar_navigation -> {
-                startActivity(Intent(this,NavigationActivity::class.java))
+                startActivity(Intent(this, NavigationActivity::class.java))
+            }
+            R.id.toolbar_tool -> {
+                WebViewActivity.launch(
+                    "https://wanandroid.com/tools",
+                    getString(R.string.menu_tool)
+                )
             }
         }
         return super.onOptionsItemSelected(item)

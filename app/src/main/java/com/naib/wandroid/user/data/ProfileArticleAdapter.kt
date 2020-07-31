@@ -8,16 +8,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.naib.wandroid.R
 import com.naib.wandroid.global.OnItemLongClickListener
-import com.naib.wandroid.global.OnLikeClickListener
 import com.naib.wandroid.main.article.Article
 import com.naib.wandroid.main.article.BaseArticleAdapter
 
 /**
  *  Created by Naib on 2020/6/11
  */
-class CollectArticleAdapter() :
-    BaseArticleAdapter<CollectArticleAdapter.CollectArticleViewHolder>() {
+class ProfileArticleAdapter() :
+    BaseArticleAdapter<ProfileArticleAdapter.CollectArticleViewHolder>() {
     var onItemLongClickListener: OnItemLongClickListener<Article>? = null
+    var showAuthor = true
 
     constructor(articles: List<Article>) : this() {
         this.data.addAll(articles)
@@ -38,10 +38,18 @@ class CollectArticleAdapter() :
         if (TextUtils.isEmpty(author)) {
             author = article.shareUser
         }
-        holder.descView.text = String.format(
-            resources.getString(R.string.profile_collect_article_desc),
-            author, article.chapterName, article.niceDate
-        )
+        if (showAuthor) {
+            holder.descView.text = String.format(
+                resources.getString(R.string.profile_article_item_desc),
+                author, article.chapterName, article.niceDate
+            )
+        } else {
+            holder.descView.text = String.format(
+                resources.getString(R.string.profile_article_item_desc_without_author),
+                article.chapterName, article.niceDate
+            )
+        }
+
         holder.itemView.setOnClickListener {
             onItemClickListener?.apply {
                 onItemClick(article, position)
@@ -49,13 +57,13 @@ class CollectArticleAdapter() :
         }
         holder.itemView.setOnLongClickListener {
             onItemLongClickListener?.apply {
-                onItemLongClick(it,article, position)
+                onItemLongClick(it, article, position)
             } != null
         }
         if (position == 0) {
             (holder.itemView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin =
                 resources.getDimensionPixelSize(R.dimen.dp_20)
-        } else{
+        } else {
             (holder.itemView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin = 0
         }
     }

@@ -3,8 +3,8 @@
     android:id="@+id/login_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/dp_64"
-    android:paddingRight="@dimen/dp_64"
+    android:paddingLeft="@dimen/dp_48"
+    android:paddingRight="@dimen/dp_48"
     android:orientation="vertical">
 
     <EditText

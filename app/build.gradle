@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.annotation:annotation:1.1.0'
+    implementation project(path: ':photoView')
 
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
