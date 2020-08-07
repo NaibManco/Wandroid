@@ -36,6 +36,7 @@ open abstract class BaseRecyclerAdapter<T, VH : RecyclerView.ViewHolder?> :
     fun remove(position: Int) {
         data.removeAt(position)
         notifyItemRemoved(position)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
