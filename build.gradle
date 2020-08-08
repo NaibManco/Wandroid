@@ -15,9 +15,9 @@ buildscript {
     ext.deps = [
             'retrofit'         : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
             'retrofitConverter': "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
-            'retrofitRxjava'   : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
-            'rxjava2'          : 'io.reactivex.rxjava2:rxjava:2.2.18',
-            'rxAndroid'        : 'io.reactivex.rxjava2:rxandroid:2.1.1',
+//            'retrofitRxjava'   : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
+//            'rxjava2'          : 'io.reactivex.rxjava2:rxjava:2.2.18',
+//            'rxAndroid'        : 'io.reactivex.rxjava2:rxandroid:2.1.1',
             'okhttp'           : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
             'okhttpLog'        : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
             'gson'             : 'com.google.code.gson:gson:2.8.5',
