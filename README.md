@@ -20,10 +20,11 @@
 
 # 截图展示
 
-| ![1.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192217.jpg?raw=true | ![4.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192213.jpeg?raw=true) |
+
+| ![1.jpg](https://github.com/NaibManco/Wandroid/raw/master/images/Lark20200807-192217.jpg) | ![2.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192213.jpeg?raw=true) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![2.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192207.jpeg?raw=true) | ![5.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192200.jpeg?raw=true) |
-| ![3.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192157.jpeg?raw=true) | ![6.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192150.jpeg?raw=true) |
+| ![3.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192207.jpeg?raw=true) | ![4.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192200.jpeg?raw=true) |
+| ![4.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192157.jpeg?raw=true) | ![6.jpg](https://github.com/NaibManco/Wandroid/blob/master/images/Lark20200807-192150.jpeg?raw=true) |
 
 
 
